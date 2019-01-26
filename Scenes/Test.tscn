@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/BasisTest.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Debug.cs" type="Script" id=2]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 0.0488463, -0.561857, -0.82579, 0, 0.826777, -0.562529, 0.998806, 0.0274774, 0.040385, 1.0008, 0.640103, 1.20409 )
+script = ExtResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.69214, 0.545346, -0.4728, 0, 0.655063, 0.755574, 0.721763, -0.522963, 0.453396, -2.19634, 2.96698, 1.99221 )
+current = true
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource( 2 )
+

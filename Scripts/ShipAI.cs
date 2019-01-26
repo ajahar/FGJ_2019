@@ -11,9 +11,6 @@ public class ShipAI : Node
     [Export]
     float retargetDistance = 20f;
 
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
     ShipMain main;
     Spatial target;
 
@@ -30,6 +27,16 @@ public class ShipAI : Node
     {
         this.target = target;
         EmitSignal("OnTargetSet", target);
+        var targetHP = target.GetNode("HP") as HP;
+
+        targetHP.Connect("OnDeath", this, "OnTargetDeath");
+    }
+
+    public void OnTargetDeath() 
+    {
+        target = null;
+
+        main.MoveTo(MainController.RandomPointOnSphere() * 200000);
     }
 
     public override void _Process(float delta)
@@ -46,14 +53,13 @@ public class ShipAI : Node
             {//Fly to random direction for a while before targeting again.
                 retargettingTimer = OS.GetTicksMsec() + retargetFlyDuration;
 
-                var fromTargetDir = main.GlobalTransform.origin - target.GlobalTransform.origin;
+                var fromTargetDir = main.Translation - target.Translation;
+                Debug.DrawRay(target.Translation, fromTargetDir);
 
-                var xQ = new Quat(Vector3.Up, MainController.RandomFloat(-45, 45));
-                var randomDir = (xQ * fromTargetDir).GetEuler();
+                var xQ = new Quat(Vector3.Up, MainController.RandomFloat(-1, 1));
+                var randomDir =  xQ.Xform(fromTargetDir);
 
-                randomDir = fromTargetDir;
-
-                retargetPosition = main.GlobalTransform.origin + randomDir * 2;
+                retargetPosition = main.GlobalTransform.origin + randomDir * 200;
                 main.MoveTo(retargetPosition);
             }
         }

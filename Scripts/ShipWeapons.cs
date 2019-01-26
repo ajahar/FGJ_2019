@@ -26,15 +26,29 @@ public class ShipWeapons : Node
     {
         this.target = target;
         targetHP = target.GetNode("HP") as HP;
+
+        targetHP.Connect("OnDeath", this, "OnTargetDeath");
+    }
+
+    public void OnTargetDeath() 
+    {
+        target = null;
     }
 
     public override void _Process(float delta)
     {
         if (target != null)
         {
-            if (parent.GlobalTransform.origin.DistanceTo(target.GlobalTransform.origin) < shootDistance)
+            if (parent.Translation.DistanceTo(target.Translation) < shootDistance)
             {
-                targetHP.LoseHP(damagePerSecond * delta);
+                var dot = parent.Transform.basis.z.Dot((parent.Translation - target.Translation).Normalized());
+
+                if (dot > 0.9f)
+                {
+                   targetHP.LoseHP(damagePerSecond * delta);
+		            //Debug.DrawLine(parent.Translation, target.Translation);
+                
+                }
             }
         }
     }

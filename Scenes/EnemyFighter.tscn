@@ -13,7 +13,6 @@
 albedo_color = Color( 1, 0, 0, 1 )
 
 [node name="EnemyFighter" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 1 )
 maxSpeed = 8.0
 acceleration = 3.0
@@ -28,10 +27,13 @@ script = ExtResource( 3 )
 
 [node name="Weapons" type="Node" parent="."]
 script = ExtResource( 4 )
+damagePerSecond = 5.0
+shootDistance = 15.0
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 0.656947, 0, 0, 0, 0.249063, 0, 0, 0, 1, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
+[connection signal="OnTargetSet" from="AI" to="Weapons" method="OnTargetSet"]
 [connection signal="OnDeath" from="HP" to="." method="Destroy"]

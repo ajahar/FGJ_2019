@@ -17,6 +17,14 @@ public class MainController : Spatial
         I = this;
 
         mothership = GetNode("Mothership") as Spatial;
+        var hp = mothership.GetNode("HP") as HP;
+
+        hp.Connect("OnDeath", this, "OnMothershipDeath");
+    }
+
+    public void OnMothershipDeath() 
+    {
+        mothership = null;
     }
 
     // Called when the node enters the scene tree for the first time.
@@ -31,9 +39,10 @@ public class MainController : Spatial
         return min + (float)r.NextDouble() * (max - min);
     }
 
-
-    public override void _Process(float delta)
+    public static Vector3 RandomPointOnSphere()
     {
-        
+    
+        var randomAngle = RandomFloat(0, Mathf.Pi * 2);
+        return new Vector3(Mathf.Cos(randomAngle), RandomFloat(-1, 1), Mathf.Sin(randomAngle));
     }
 }

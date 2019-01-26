@@ -6,6 +6,16 @@ public class EnemySpawner : Node
     Timer timer;
     Random r;
     PackedScene enemyScene;
+    
+    [Export]
+    Curve spawnDelay;
+
+    [Export]
+    float roundDuration = 60;
+    [Export]
+    float baseSpawnDelay = 10;
+
+    int startTime;
 
     public override void _Ready()
     {
@@ -17,18 +27,27 @@ public class EnemySpawner : Node
         timer.WaitTime = 2;
         AddChild(timer);
         timer.Start();
+
+        startTime = OS.GetSystemTimeSecs();
     }
 
-    public void OnSpawnTimer() 
+    public void OnSpawnTimer()
     {
-        timer.WaitTime = r.Next(2,6);
+        if (MainController.I.mothership == null)
+        {
+            timer.Stop();
+            return;
+        }
+
+        timer.WaitTime = spawnDelay.Interpolate((OS.GetSystemTimeSecs() - startTime) / roundDuration) * baseSpawnDelay;
+        GD.Print( timer.WaitTime);
+        
         timer.Start();
 
         GD.Print("Spawn enemy");
         var enemy = enemyScene.Instance() as Spatial;
         GetParent().AddChild(enemy);
-        var randomAngle = MainController.RandomFloat(0, Mathf.Pi * 2);
-        enemy.Translation = MainController.I.mothership.GlobalTransform.origin + new Vector3(Mathf.Cos(randomAngle), MainController.RandomFloat(-1, 1), Mathf.Sin(randomAngle)) * 20;
+        enemy.Translation = MainController.I.mothership.Translation + MainController.RandomPointOnSphere() * 20;
 
         var AI = enemy.GetNode("AI") as ShipAI;
         AI.SetTarget(MainController.I.mothership);

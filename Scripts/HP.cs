@@ -20,7 +20,6 @@ public class HP : Node
         if (hp > 0)
         {
             hp -= amount;
-            GD.Print("Lost health");
 
             if (hp <= 0)
             {
