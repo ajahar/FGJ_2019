@@ -15,11 +15,8 @@ public class MainController : Spatial
     public override void _EnterTree()
     {
         I = this;
-		GD.Print("ASD: "+mothership);
 
         mothership = GetNode("Mothership") as Spatial;
-		
-		GD.Print("ASD: "+mothership);
     }
 
     // Called when the node enters the scene tree for the first time.
@@ -32,5 +29,11 @@ public class MainController : Spatial
     public static float RandomFloat(float min, float max)
     {
         return min + (float)r.NextDouble() * (max - min);
+    }
+
+
+    public override void _Process(float delta)
+    {
+        
     }
 }

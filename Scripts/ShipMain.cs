@@ -1,6 +1,6 @@
 using Godot;
 
-public class ShipMove : Spatial
+public class ShipMain : Spatial
 {
     [Export]
     bool fullGraphicsRotation = false;
@@ -14,7 +14,6 @@ public class ShipMove : Spatial
 
     public override void _Ready()
     {
-
     }
 
     public override void _PhysicsProcess(float delta)
@@ -60,4 +59,9 @@ public class ShipMove : Spatial
         moveTarget = position;
         moving = true;
     }
+
+    public void Destroy() 
+    {
+        QueueFree();
+     }
 }

@@ -30,5 +30,7 @@ public class EnemySpawner : Node
         var randomAngle = MainController.RandomFloat(0, Mathf.Pi * 2);
         enemy.Translation = MainController.I.mothership.GlobalTransform.origin + new Vector3(Mathf.Cos(randomAngle), MainController.RandomFloat(-1, 1), Mathf.Sin(randomAngle)) * 20;
 
+        var AI = enemy.GetNode("AI") as ShipAI;
+        AI.SetTarget(MainController.I.mothership);
     }
 }
