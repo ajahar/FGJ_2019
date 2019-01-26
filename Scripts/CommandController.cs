@@ -85,6 +85,10 @@ public class CommandController : Node2D
 				shipList.Text = shipList.Text + "Attack: " + targetShip.GetName();
 			}
 		}
+		
+		if (MainController.I.selectedFighters.Count > 0) {
+			Update();
+		}
 	}
 	
 	public ShipMain pointSelect() {		
@@ -107,6 +111,16 @@ public class CommandController : Node2D
 	
 	public override void _Draw()
 	{
+		
+		foreach(var fighter in MainController.I.selectedFighters) {
+			var worldPos = fighter.GetTranslation();
+			var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
+			
+			DrawLine(screenPos + Vector2.Up * 20,screenPos + Vector2.Left * 20, UiColor);
+			DrawLine(screenPos + Vector2.Left * 20,screenPos + Vector2.Right * 20, UiColor);
+			DrawLine(screenPos + Vector2.Right * 20,screenPos + Vector2.Up * 20, UiColor);
+		}
+		
 		DrawRect(box, UiColor, false);
 	}
 }
