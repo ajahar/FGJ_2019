@@ -50,13 +50,13 @@ public class Debug : Node2D
 
     public override void _Draw()
     {
-        var c = GetNode("../Camera") as Camera;//Terrible hack, can't find current camera
+    	var c = GetViewport().GetCamera();
         
         if (draw1)
-        DrawLine(c.UnprojectPosition(start), c.UnprojectPosition(end), Color.ColorN("red"));
+        	DrawLine(c.UnprojectPosition(start), c.UnprojectPosition(end), Color.ColorN("red"));
         
         if (draw2)
-        DrawLine(c.UnprojectPosition(start2), c.UnprojectPosition(end2), Color.ColorN("blue"));
+        	DrawLine(c.UnprojectPosition(start2), c.UnprojectPosition(end2), Color.ColorN("blue"));
 
         draw1 = false;
         draw2 = false;

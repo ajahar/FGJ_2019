@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/ShipAI.cs" type="Script" id=2]
-[ext_resource path="res://Scripts/HP.cs" type="Script" id=3]
-[ext_resource path="res://Scripts/ShipWeapons.cs" type="Script" id=4]
+[ext_resource path="res://Scripts/ShipWeapons.cs" type="Script" id=3]
+[ext_resource path="res://Scripts/HP.cs" type="Script" id=4]
+
+[sub_resource type="BoxShape" id=3]
+
+extents = Vector3( 1, 0.892542, 1.38905 )
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -12,21 +16,23 @@
 
 albedo_color = Color( 0.054902, 0, 1, 1 )
 
-[node name="AllyFighter" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+[node name="AllyFighter" type="KinematicBody"]
 script = ExtResource( 1 )
 maxSpeed = 8.0
 acceleration = 3.0
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 3 )
 
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 2 )
 retargetFlyDuration = 4000.0
 retargetDistance = -10.0
 
-[node name="HP" type="Node" parent="."]
+[node name="Weapons" type="Node" parent="."]
 script = ExtResource( 3 )
 
-[node name="Weapons" type="Node" parent="."]
+[node name="HP" type="Node" parent="."]
 script = ExtResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
