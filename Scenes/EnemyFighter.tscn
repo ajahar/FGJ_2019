@@ -27,6 +27,7 @@ retargetDistance = 10.0
 
 [node name="HP" type="Node" parent="."]
 script = ExtResource( 3 )
+startHP = 10.0
 
 [node name="Weapons" type="Node" parent="."]
 script = ExtResource( 4 )
@@ -42,3 +43,4 @@ material/0 = SubResource( 2 )
 shape = SubResource( 3 )
 
 [connection signal="OnTargetSet" from="AI" to="Weapons" method="OnTargetSet"]
+[connection signal="OnDeath" from="HP" to="." method="Destroy"]

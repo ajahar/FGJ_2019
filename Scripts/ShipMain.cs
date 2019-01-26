@@ -16,7 +16,7 @@ public class ShipMain : KinematicBody
     
     public override void _Ready()
     {
-    	ai = GetNodeOrNull<ShipAI>("AI");
+    	ai = GetNode("AI") as ShipAI;
     }
 
     public override void _PhysicsProcess(float delta)
