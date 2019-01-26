@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class CameraControl : InterpolatedCamera
+public class CameraControl : Camera
 {
     const float SENSITIVITY = .3f;
     
