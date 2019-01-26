@@ -10,12 +10,14 @@ public class CommandController : Node2D
     [Export]
     Color UiColor;
     
+    const float RAY_LENGTH = 500f;
+    
     Rect2 box;
     bool bandboxing = false;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
-    {
+    { 
     	box = new Rect2(0, 0, new Vector2(0, 0));
     }
     
@@ -33,10 +35,40 @@ public class CommandController : Node2D
 		}
 		if (Input.IsActionJustReleased("mouse_select")) {
 			bandboxing = false;
+			
+			
+			//TODO: Bandbox
+			//var ship = GetNode("../Interceptor");
+			
+			
 			box = new Rect2(0, 0, new Vector2(0, 0));
 			Update();
+	
+			pointSelect();
 		}
 		
+	}
+	
+	public void pointSelect() {		
+		var pos = GetViewport().GetMousePosition();
+		var from = GetViewport().GetCamera().ProjectRayOrigin(pos);
+		var to = from + GetViewport().GetCamera().ProjectRayNormal(pos) * RAY_LENGTH;
+		var space = GetViewport().GetWorld().DirectSpaceState;
+		var selection = space.IntersectRay(from, to);
+		
+		// TODO: Maybe just send signal?
+		
+		if(selection != null) {
+			foreach (var pair in selection) {
+				if (pair.Key.Equals("collider")) {
+					var ship = GetTree().GetRoot().GetNodeOrNull<Interceptor>("Root/" + pair.Value.ToString());
+					if (ship != null) {
+						
+						ship.selected = true;
+					}
+				}
+			}
+		}
 	}
 	
 	public override void _Draw()

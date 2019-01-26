@@ -1,7 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/CameraControl.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/CommandController.cs" type="Script" id=2]
+[ext_resource path="res://Scripts/Interceptor.cs" type="Script" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+
+albedo_color = Color( 0.0313726, 0, 1, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+
+material = SubResource( 1 )
+
+[sub_resource type="BoxShape" id=3]
+
 
 [node name="Root" type="Spatial"]
 
@@ -16,4 +28,14 @@ script = ExtResource( 1 )
 [node name="GUI" type="Node2D" parent="."]
 script = ExtResource( 2 )
 UiColor = Color( 0.00784314, 1, 0, 1 )
+
+[node name="Interceptor" type="KinematicBody" parent="."]
+script = ExtResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Interceptor"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Interceptor"]
+shape = SubResource( 3 )
 
