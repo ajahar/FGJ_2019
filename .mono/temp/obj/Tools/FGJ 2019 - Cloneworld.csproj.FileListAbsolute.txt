@@ -1,6 +1,0 @@
-C:\hack\FGJ_2019\.mono\temp\bin\Tools\FGJ 2019 - Cloneworld.dll
-C:\hack\FGJ_2019\.mono\temp\bin\Tools\FGJ 2019 - Cloneworld.pdb
-C:\hack\FGJ_2019\.mono\temp\obj\Tools\FGJ 2019 - Cloneworld.csprojAssemblyReference.cache
-C:\hack\FGJ_2019\.mono\temp\obj\Tools\FGJ 2019 - Cloneworld.csproj.CoreCompileInputs.cache
-C:\hack\FGJ_2019\.mono\temp\obj\Tools\FGJ 2019 - Cloneworld.dll
-C:\hack\FGJ_2019\.mono\temp\obj\Tools\FGJ 2019 - Cloneworld.pdb
