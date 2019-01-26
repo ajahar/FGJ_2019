@@ -6,7 +6,7 @@ public class ShipWeapons : Node
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
-    Spatial parent, target;
+    KinematicBody parent, target;
     HP targetHP;
 
 
@@ -19,10 +19,10 @@ public class ShipWeapons : Node
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        parent = GetParent() as Spatial;
+        parent = GetParent() as KinematicBody;
     }
 
-    public void OnTargetSet(Spatial target)
+    public void OnTargetSet(KinematicBody target)
     {
         this.target = target;
         targetHP = target.GetNode("HP") as HP;

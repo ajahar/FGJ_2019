@@ -5,28 +5,44 @@ public class CameraControl : Camera
 {
     const float SENSITIVITY = .3f;
     
-    bool drag = false;
+    public bool drag = false;
     bool freeCam = false;
     Spatial pitchGimbal;
     Spatial yawGimbal;
+    Timer dragtimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 	    pitchGimbal = GetTree().GetRoot().GetNode<Spatial>("Root/Gimbal/PitchGimbal");
 	    yawGimbal = GetTree().GetRoot().GetNode<Spatial>("Root/Gimbal");
+	    
+	    dragtimer = new Timer();
+	    dragtimer.Connect("timeout", this, "OnDragTimer");
+	    dragtimer.OneShot = true;
+	    AddChild(dragtimer);
+	}
+	
+	public void OnDragTimer() {
+		drag = true;
 	}
 	
 	public override void _Input(InputEvent @event) {
 		if (@event is InputEventMouseButton) {
 			var buttonEvent = (InputEventMouseButton)@event;
-			if(buttonEvent.IsActionPressed("mouse_action")) {
-				drag = true;
+			if(buttonEvent.IsActionPressed("mouse_action") && drag) {
 				Input.SetMouseMode(Input.MouseMode.Captured);
 			}
 			if(buttonEvent.IsActionReleased("mouse_action")) {
 				drag = false;
+				dragtimer.Stop();
 				Input.SetMouseMode(Input.MouseMode.Visible);
+			}
+			if (buttonEvent.IsActionPressed("ui_page_up")) {
+				Translate(Vector3.Forward * 2f);
+			}
+			if (buttonEvent.IsActionPressed("ui_page_down")) {
+				Translate(Vector3.Back * 2f);
 			}
     	}
     	if (@event is InputEventMouseMotion && drag){
@@ -40,7 +56,9 @@ public class CameraControl : Camera
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-	   
+		if (Input.IsActionJustPressed("mouse_action")) {
+			dragtimer.Start(0.1f);
+		}
         if (Input.IsActionJustPressed("camera_focus")) {
         	freeCam = !freeCam;
         	if (!freeCam) {

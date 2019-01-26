@@ -45,7 +45,7 @@ public class EnemySpawner : Node
         timer.Start();
 
         GD.Print("Spawn enemy");
-        var enemy = enemyScene.Instance() as Spatial;
+        var enemy = enemyScene.Instance() as KinematicBody;
         GetParent().AddChild(enemy);
         enemy.Translation = MainController.I.mothership.Translation + MainController.RandomPointOnSphere() * 20;
 

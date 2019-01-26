@@ -4,7 +4,7 @@ using System;
 public class ShipAI : Node
 {
     [Signal]
-    public delegate void OnTargetSet(Spatial target);
+    public delegate void OnTargetSet(KinematicBody target);
 
     [Export]
     float retargetFlyDuration = 2f;
@@ -23,7 +23,7 @@ public class ShipAI : Node
         main = GetParent() as ShipMain;
     }
 
-    public void SetTarget(Spatial target)
+    public void SetTarget(KinematicBody target)
     {
         this.target = target;
         EmitSignal("OnTargetSet", target);

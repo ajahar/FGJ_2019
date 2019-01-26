@@ -10,12 +10,12 @@ public class CommandController : Node2D
     [Export]
     Color UiColor;
     
-    const float RAY_LENGTH = 10000f;
+    const float RAY_LENGTH = 1000f;
     
     Rect2 box;
     bool bandboxing = false;
     RichTextLabel shipList;
-    
+    CameraControl camera;
     
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -23,6 +23,7 @@ public class CommandController : Node2D
     	box = new Rect2(0, 0, new Vector2(0, 0));
     	shipList = GetNode<RichTextLabel>("ShipList");
     	shipList.Text = "Ships";
+    	camera = GetTree().GetRoot().GetNode<CameraControl>("Root/Gimbal/PitchGimbal/Camera");
     }
     
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -41,12 +42,9 @@ public class CommandController : Node2D
 			Update();
 		}
 		if (Input.IsActionJustReleased("mouse_select")) {
-			bandboxing = false;
-			
+			bandboxing = false;	
 			box = box.Abs();
-			
-			GD.Print("Box area: " + box.Area);
-			
+
 			if (box.Area > 1f) {
 					
 				//TODO: Bandbox selection with proper ship list
@@ -60,36 +58,41 @@ public class CommandController : Node2D
 					//ship.selected = true;
 				}
 			} else {
-				pointSelect();
+				var selectedShip = pointSelect();
+				if (selectedShip != null) {
+					shipList.Text = selectedShip.GetName();
+				}
 			}
 			
 			box = new Rect2(0, 0, new Vector2(0, 0));
 			Update();
-	
 		}
 		
+		if(Input.IsActionPressed("mouse_action") && !camera.drag) {
+			// TODO: Set target
+			var targetShip = pointSelect();
+			if (targetShip != null) {
+				shipList.Text = "Attack: " + targetShip.GetName();
+			}
+		}
 	}
 	
-	public void pointSelect() {		
+	public ShipMain pointSelect() {		
 		var pos = GetViewport().GetMousePosition();
 		var from = GetViewport().GetCamera().ProjectRayOrigin(pos);
 		var to = from + GetViewport().GetCamera().ProjectRayNormal(pos) * RAY_LENGTH;
 		var space = GetViewport().GetWorld().DirectSpaceState;
 		var selection = space.IntersectRay(from, to);
 		
-		// TODO: Maybe just send signal?
-		
 		if(selection != null) {
 			foreach (var pair in selection) {
 				if (pair.Key.Equals("collider")) {
-					var ship = GetTree().GetRoot().GetNodeOrNull<ShipMain>("Root/" + pair.Value.ToString());
-					if (ship != null) {	
-						//ship.selected = true;
-						shipList.Text = ship.GetName();
-					}
+					var ship = (ShipMain)pair.Value;
+					return ship;
 				}
 			}
 		}
+		return null;
 	}
 	
 	public override void _Draw()

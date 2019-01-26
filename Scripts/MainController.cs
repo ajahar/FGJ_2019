@@ -9,14 +9,14 @@ public class MainController : Spatial
 	
 	public static MainController I;
 
-    public Spatial mothership;
+    public KinematicBody mothership;
     public static Random r = new Random();
 
     public override void _EnterTree()
     {
         I = this;
 
-        mothership = GetNode("Mothership") as Spatial;
+        mothership = GetNode("Mothership") as KinematicBody;
         var hp = mothership.GetNode("HP") as HP;
 
         hp.Connect("OnDeath", this, "OnMothershipDeath");

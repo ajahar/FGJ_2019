@@ -1,6 +1,6 @@
 using Godot;
 
-public class ShipMain : Spatial
+public class ShipMain : KinematicBody
 {
     [Export]
     bool fullGraphicsRotation = false;
