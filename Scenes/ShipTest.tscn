@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/MainController.cs" type="Script" id=1]
+[ext_resource path="res://Graphics/MotherShip.dae" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/ShipMove.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/EnemyFighter.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/EnemySpawner.cs" type="Script" id=5]
+
+[sub_resource type="SphereMesh" id=2]
+
+radial_segments = 8
+rings = 8
+
+[sub_resource type="SphereShape" id=3]
+
+radius = 1.27155
+
+[sub_resource type="CubeMesh" id=1]
+
+
+[node name="Root" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Mothership" parent="." instance=ExtResource( 2 )]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.731826, -0.449647, 0.512101, 0, 0.751442, 0.659799, -0.681491, -0.482858, 0.549925, 10.2994, 16.8252, 11.5353 )
+current = true
+
+[node name="Target" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.41226, 10, 9.11845 )
+gravity_scale = 0.0
+linear_velocity = Vector3( 1, 0, 0 )
+
+[node name="Target" type="CSGMesh" parent="Target"]
+mesh = SubResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Target"]
+shape = SubResource( 3 )
+
+[node name="Fighter" type="Spatial" parent="."]
+transform = Transform( 0.69178, 0, 0.722108, 0, 1, 0, -0.722108, 0, 0.69178, 5.46052, 0, 0 )
+script = ExtResource( 3 )
+maxSpeed = 8.0
+acceleration = 3.0
+
+[node name="MeshInstance" type="MeshInstance" parent="Fighter"]
+transform = Transform( 0.656947, 0, 0, 0, 0.249063, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="EnemyFighter" parent="." instance=ExtResource( 4 )]
+
+[node name="EnemySpawner" type="Node" parent="."]
+script = ExtResource( 5 )
+
