@@ -13,7 +13,7 @@ public class Interceptor : Spatial
     public override void _Ready()
     {
     	// Input connection test
-    	Connect("input_event", this, "clicked");
+    	//Connect("input_event", this, "clicked");
     }
     
     public override void _Input(InputEvent @event) {
@@ -30,7 +30,7 @@ public class Interceptor : Spatial
 	public override void _Process(float delta)
 	{
 		if (selected) {
-			
+			GD.Print("jee");
 		}
 	}
 }

@@ -36,15 +36,24 @@ public class CommandController : Node2D
 		if (Input.IsActionJustReleased("mouse_select")) {
 			bandboxing = false;
 			
-			
-			//TODO: Bandbox
-			//var ship = GetNode("../Interceptor");
-			
+			if (box.Area > 0.2f) {
+					
+				//TODO: Bandbox selection with proper ship list
+				
+				var ship = GetNode<Interceptor>("../Interceptor");
+				var worldPos = ship.GetTranslation();
+				var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
+					
+				if(box.HasPoint(screenPos)) {
+					ship.selected = true;
+				}
+			} else {
+				pointSelect();
+			}
 			
 			box = new Rect2(0, 0, new Vector2(0, 0));
 			Update();
 	
-			pointSelect();
 		}
 		
 	}
