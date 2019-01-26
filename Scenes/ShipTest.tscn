@@ -15,7 +15,6 @@
 script = ExtResource( 1 )
 
 [node name="Mothership" type="Spatial" parent="."]
-editor/display_folded = true
 script = ExtResource( 2 )
 
 [node name="Model" parent="Mothership" instance=ExtResource( 3 )]

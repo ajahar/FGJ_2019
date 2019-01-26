@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.80.40 commit date:2019-01-06, commit time:10:51, hash:6c7762687e57</authoring_tool>
     </contributor>
-    <created>2019-01-26T00:08:10</created>
-    <modified>2019-01-26T00:08:10</modified>
+    <created>2019-01-26T22:25:18</created>
+    <modified>2019-01-26T22:25:18</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -32,22 +32,22 @@
     </camera>
   </library_cameras>
   <library_effects>
-    <effect id="Material_001-effect">
+    <effect id="Mothership-effect">
       <profile_COMMON>
-        <newparam sid="ShipDiffuse_png-surface">
+        <newparam sid="MothershipTexture_png-surface">
           <surface type="2D">
-            <init_from>ShipDiffuse_png</init_from>
+            <init_from>MothershipTexture_png</init_from>
           </surface>
         </newparam>
-        <newparam sid="ShipDiffuse_png-sampler">
+        <newparam sid="MothershipTexture_png-sampler">
           <sampler2D>
-            <source>ShipDiffuse_png-surface</source>
+            <source>MothershipTexture_png-surface</source>
           </sampler2D>
         </newparam>
         <technique sid="common">
           <lambert>
             <diffuse>
-              <texture texture="ShipDiffuse_png-sampler" texcoord="UVMap"/>
+              <texture texture="MothershipTexture_png-sampler" texcoord="UVMap"/>
             </diffuse>
             <specular>
               <color sid="specular">0 0.5 0 1</color>
@@ -61,13 +61,13 @@
     </effect>
   </library_effects>
   <library_images>
-    <image id="ShipDiffuse_png" name="ShipDiffuse_png">
-      <init_from>ShipDiffuse.png</init_from>
+    <image id="MothershipTexture_png" name="MothershipTexture_png">
+      <init_from>MothershipTexture.png</init_from>
     </image>
   </library_images>
   <library_materials>
-    <material id="Material_001-material" name="Material.001">
-      <instance_effect url="#Material_001-effect"/>
+    <material id="Mothership-material" name="Mothership">
+      <instance_effect url="#Mothership-effect"/>
     </material>
   </library_materials>
   <library_geometries>
@@ -116,7 +116,7 @@
         <vertices id="Cube_002-mesh-vertices">
           <input semantic="POSITION" source="#Cube_002-mesh-positions"/>
         </vertices>
-        <polylist material="Material_001-material" count="704">
+        <polylist material="Mothership-material" count="704">
           <input semantic="VERTEX" source="#Cube_002-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Cube_002-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Cube_002-mesh-map-0" offset="2" set="1"/>
@@ -138,7 +138,7 @@
         <instance_geometry url="#Cube_002-mesh" name="Cube">
           <bind_material>
             <technique_common>
-              <instance_material symbol="Material_001-material" target="#Material_001-material">
+              <instance_material symbol="Mothership-material" target="#Mothership-material">
                 <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
               </instance_material>
             </technique_common>
