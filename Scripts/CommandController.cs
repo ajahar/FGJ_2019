@@ -59,11 +59,10 @@ public class CommandController : Node2D
 						MainController.I.selectedFighters.Add(fighter);
 						shipList.Text = shipList.Text + fighter.Name + "\n";
 					}
-				}
-				
-		
-								
+				}		
 			} else {
+				MainController.I.selectedFighters.Clear();
+				shipList.Text = "";
 				var selectedShip = pointSelect();
 				if (selectedShip != null && selectedShip.GetName().Contains("Ally")) {
 					MainController.I.selectedFighters.Add(selectedShip);
@@ -75,17 +74,15 @@ public class CommandController : Node2D
 			Update();
 		}
 		
-		if(Input.IsActionPressed("mouse_action") && !camera.drag) {
+		if(Input.IsActionJustReleased("mouse_action") && !camera.drag) {
 			var targetShip = pointSelect();
 			if (targetShip != null && MainController.I.enemies.Contains(targetShip)) {
-				
-				//TODO: Attack
-				if (MainController.I.selectedFighters.Count != 0) {
-					MainController.I.selectedFighters[0].MoveTo(targetShip.Transform.origin);
-				
-					shipList.Text = "Attack: " + targetShip.GetName();
+				shipList.Text = "";
+				foreach (var fighter in MainController.I.selectedFighters) {
+					fighter.ai.SetTarget(targetShip);
+					shipList.Text = shipList.Text + fighter.Name + "\n";
 				}
-
+				shipList.Text = shipList.Text + "Attack: " + targetShip.GetName();
 			}
 		}
 	}
