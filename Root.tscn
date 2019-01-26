@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://CameraControl.cs" type="Script" id=1]
+
+[node name="Root" type="Spatial"]
+
+[node name="Gimbal" type="Spatial" parent="."]
+
+[node name="PitchGimbal" type="Spatial" parent="Gimbal"]
+
+[node name="InterpolatedCamera" type="InterpolatedCamera" parent="Gimbal/PitchGimbal"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5 )
+script = ExtResource( 1 )
+
