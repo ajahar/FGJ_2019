@@ -11,7 +11,7 @@ public class ShipMain : KinematicBody
     bool moving = false;
     Vector3 moveTarget;
     float speed = 0;
-
+    
     public override void _Ready()
     {
     }

@@ -48,7 +48,8 @@ public class EnemySpawner : Node
         var enemy = enemyScene.Instance() as KinematicBody;
         GetParent().AddChild(enemy);
         enemy.Translation = MainController.I.mothership.Translation + MainController.RandomPointOnSphere() * 20;
-
+        MainController.I.enemies.Add((ShipMain)enemy);
+        
         var AI = enemy.GetNode("AI") as ShipAI;
         AI.SetTarget(MainController.I.mothership);
     }

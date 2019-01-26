@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class MainController : Spatial
 {
@@ -11,6 +12,10 @@ public class MainController : Spatial
 
     public KinematicBody mothership;
     public static Random r = new Random();
+    
+    public List<ShipMain> enemies = new List<ShipMain>();
+    public List<ShipMain> fighters = new List<ShipMain>();
+    public List<ShipMain> selectedFighters = new List<ShipMain>();
 
     public override void _EnterTree()
     {
@@ -20,6 +25,8 @@ public class MainController : Spatial
         var hp = mothership.GetNode("HP") as HP;
 
         hp.Connect("OnDeath", this, "OnMothershipDeath");
+        
+        fighters.Add(GetNode<ShipMain>("AllyFighter"));
     }
 
     public void OnMothershipDeath() 
