@@ -19,8 +19,15 @@ public class CameraControl : InterpolatedCamera
 	
 	public override void _Input(InputEvent @event) {
 		if (@event is InputEventMouseButton) {
-    		GD.Print("Mouse Click/Unclick at: " + ((InputEventMouseButton)@event).Position);
-    		drag = !drag;
+			var buttonEvent = (InputEventMouseButton)@event;
+			if(buttonEvent.IsActionPressed("mouse_action")) {
+				drag = true;
+				Input.SetMouseMode(Input.MouseMode.Captured);
+			}
+			if(buttonEvent.IsActionReleased("mouse_action")) {
+				drag = false;
+				Input.SetMouseMode(Input.MouseMode.Visible);
+			}
     	}
     	if (@event is InputEventMouseMotion && drag){
     		var motionEvent = (InputEventMouseMotion)@event;
