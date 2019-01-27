@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public class AudioPlayer : AudioStreamPlayer2D
+public class AudioPlayer : AudioStreamPlayer
 {
     [Export]
     public string path = "res://";
@@ -12,6 +12,8 @@ public class AudioPlayer : AudioStreamPlayer2D
     //This should work, but no... Godoooooooooot!
     [Export]
     public string[] sampleNames;
+
+    int lastIndex = -1;
 
     string[] sampleNamesListFFS_0
      =
@@ -40,15 +42,35 @@ public class AudioPlayer : AudioStreamPlayer2D
 
     public void PlayRandom()
     {
-    
+        if (Playing)
+            return;
+        
         var sampleNames2 = sampleNamesListFFS_0;
 
         if (samplesArrayIndexFFS == 1)
             sampleNames2 = sampleNamesListFFS_1;
     
         GD.Print("Samples: "+ sampleNames2.Length);
-        var name = path + sampleNames2[MainController.RandomInt(0, sampleNames2.Length)];
+
+        int index = 0;
+
+        do
+        {
+            index = MainController.RandomInt(0, sampleNames2.Length);
+        }
+        while (index == lastIndex);
+
+        lastIndex = index;
+        var name = path + sampleNames2[index];
         Stream = ResourceLoader.Load(name) as AudioStream;
         Play();
     }
+    
+    
+
+    private void Play()
+    {
+        Play(0);
+    }
 }
+

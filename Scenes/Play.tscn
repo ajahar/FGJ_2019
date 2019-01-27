@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Scripts/MainController.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/CameraControl.cs" type="Script" id=2]
@@ -8,11 +8,14 @@
 [ext_resource path="res://Space.tres" type="Environment" id=6]
 [ext_resource path="res://Scripts/AudioPlayer.cs" type="Script" id=7]
 [ext_resource path="res://Audio/Commander/Log.ogg" type="AudioStream" id=8]
-[ext_resource path="res://Scripts/CommandController.cs" type="Script" id=9]
-[ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=10]
-[ext_resource path="res://Graphics/MotherShip.dae" type="PackedScene" id=11]
-[ext_resource path="res://Scripts/HP.cs" type="Script" id=12]
-[ext_resource path="res://Graphics/Particle1.png" type="Texture" id=13]
+[ext_resource path="res://Audio/Commander/SystemsNominal.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Audio/Commander/SystemsHalf.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Audio/Commander/SystemsCritical.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Scripts/CommandController.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=13]
+[ext_resource path="res://Graphics/MotherShip.dae" type="PackedScene" id=14]
+[ext_resource path="res://Scripts/HP.cs" type="Script" id=15]
+[ext_resource path="res://Graphics/Particle1.png" type="Texture" id=16]
 
 [sub_resource type="Curve" id=1]
 
@@ -32,7 +35,7 @@ particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 albedo_color = Color( 0.894118, 0.792157, 0.12549, 0.74902 )
-albedo_texture = ExtResource( 13 )
+albedo_texture = ExtResource( 16 )
 
 [sub_resource type="QuadMesh" id=4]
 
@@ -44,7 +47,6 @@ _data = [ Vector2( 0, 0 ), 0.0, 1.56659, 0, 0, Vector2( 0.520081, 1 ), 0.0, 0.0,
 
 [node name="Root" type="Spatial"]
 script = ExtResource( 1 )
-startDelay = 5.0
 
 [node name="Gimbal" type="Spatial" parent="."]
 transform = Transform( 0.592277, 0, -0.805735, 0, 1, 0, 0.805735, 0, 0.592277, 0, 0, 0 )
@@ -75,23 +77,41 @@ light_indirect_energy = 2.22
 
 [node name="Audio" type="Node" parent="."]
 
-[node name="TargetSet" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="TargetSet" type="AudioStreamPlayer" parent="Audio"]
+bus = "Units"
 script = ExtResource( 7 )
 path = "res://Audio/UnitSounds/"
 
-[node name="TargetDestroy" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="TargetDestroy" type="AudioStreamPlayer" parent="Audio"]
+bus = "Units"
 script = ExtResource( 7 )
 path = "res://Audio/UnitSounds/"
 samplesArrayIndexFFS = 1
 
-[node name="CaptainsLog" type="AudioStreamPlayer2D" parent="Audio"]
+[node name="CaptainsLog" type="AudioStreamPlayer" parent="Audio"]
 stream = ExtResource( 8 )
 autoplay = true
+bus = "Commander"
+
+[node name="Nominal" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 9 )
+bus = "Commander"
+script = ExtResource( 7 )
+
+[node name="Half" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 10 )
+bus = "Commander"
+script = ExtResource( 7 )
+
+[node name="Critical" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 11 )
+bus = "Commander"
+script = ExtResource( 7 )
 
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="GUI" type="Node2D" parent="."]
-script = ExtResource( 9 )
+script = ExtResource( 12 )
 UiColor = Color( 0.00784314, 1, 0, 1 )
 CommandColor = Color( 1, 0.0196078, 0, 1 )
 
@@ -105,13 +125,13 @@ text = "		"
 [node name="Mothership" type="KinematicBody" parent="."]
 editor/display_folded = true
 transform = Transform( 1, 0, 2.98023e-08, 0, 1, -2.98023e-08, -2.98023e-08, -1.49012e-08, 1, 0, 0, 0 )
-script = ExtResource( 10 )
+script = ExtResource( 13 )
 
-[node name="Model" parent="Mothership" instance=ExtResource( 11 )]
+[node name="Model" parent="Mothership" instance=ExtResource( 14 )]
 transform = Transform( 1, -4.44089e-16, -2.98023e-08, 8.88179e-16, 1, 2.98023e-08, 2.98023e-08, 1.49012e-08, 1, 0, 0, 0 )
 
 [node name="HP" type="Node" parent="Mothership"]
-script = ExtResource( 12 )
+script = ExtResource( 15 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Mothership"]
 shape = SubResource( 2 )
@@ -138,8 +158,11 @@ scale_amount = 10.0
 scale_amount_curve = SubResource( 5 )
 hue_variation = 0.11
 
+[connection signal="OnCritical" from="." to="Audio/Critical" method="Play"]
+[connection signal="OnHalf" from="." to="Audio/Half" method="Play"]
 [connection signal="OnTargetDestroyed" from="." to="Audio/TargetDestroy" method="PlayRandom"]
 [connection signal="start" from="." to="AllySpawner" method="OnGameStartTimer"]
 [connection signal="start" from="." to="EnemySpawner" method="OnGameStartTimer"]
+[connection signal="start" from="." to="Audio/Nominal" method="Play"]
 [connection signal="OnTargetAssigned" from="GUI" to="Audio/TargetSet" method="PlayRandom"]
 [connection signal="OnDeath" from="Mothership/HP" to="Mothership" method="Destroy"]

@@ -42,9 +42,6 @@ public class ShipAI : Node
     public void OnTargetDeath() 
     {
         target = null;
-
-        // TODO: Retarget?
-        //main.MoveTo(MainController.RandomPointOnSphere() * 200000);
     }
 
     public override void _Process(float delta)

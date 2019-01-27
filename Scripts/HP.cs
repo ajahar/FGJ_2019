@@ -7,6 +7,9 @@ public class HP : Node
 
     [Signal]
     public delegate void OnDeath();
+	
+	[Signal]
+    public delegate void OnHPChanged(float hp);
 
     float hp;
     
@@ -30,6 +33,8 @@ public class HP : Node
                 GD.Print("OnDeath");
                 EmitSignal("OnDeath");
             }
+            else 
+                EmitSignal("OnHPChanged", hp);
         }
     }
 }
