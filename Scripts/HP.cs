@@ -9,6 +9,10 @@ public class HP : Node
     public delegate void OnDeath();
 
     float hp;
+    
+    public float GetHP() {
+    	return hp;
+    }
 
     public override void _Ready()
     {
