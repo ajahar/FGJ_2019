@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/MainController.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/CameraControl.cs" type="Script" id=2]
@@ -12,7 +12,7 @@
 [ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=10]
 [ext_resource path="res://Graphics/MotherShip.dae" type="PackedScene" id=11]
 [ext_resource path="res://Scripts/HP.cs" type="Script" id=12]
-[ext_resource path="res://Scripts/AudioPlayer.cs" type="Script" id=13]
+[ext_resource path="res://Graphics/Particle1.png" type="Texture" id=13]
 
 [sub_resource type="Curve" id=1]
 
@@ -22,10 +22,31 @@ _data = [ Vector2( 0.530595, 0.7904 ), 0.0, -0.747843, 0, 0, Vector2( 0.907929, 
 
 extents = Vector3( 3.088, 6.74233, 1 )
 
+[sub_resource type="SpatialMaterial" id=3]
+
+flags_transparent = true
+flags_unshaded = true
+params_specular_mode = 4
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 0.894118, 0.792157, 0.12549, 0.74902 )
+albedo_texture = ExtResource( 13 )
+
+[sub_resource type="QuadMesh" id=4]
+
+material = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+
+_data = [ Vector2( 0, 0 ), 0.0, 1.56659, 0, 0, Vector2( 0.520081, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.95397, 0.0, 0, 0 ]
+
 [node name="Root" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="Gimbal" type="Spatial" parent="."]
+editor/display_folded = true
 transform = Transform( 0.592277, 0, -0.805735, 0, 1, 0, 0.805735, 0, 0.592277, 0, 0, 0 )
 
 [node name="PitchGimbal" type="Spatial" parent="Gimbal"]
@@ -87,19 +108,26 @@ script = ExtResource( 12 )
 [node name="CollisionShape" type="CollisionShape" parent="Mothership"]
 shape = SubResource( 2 )
 
-[node name="Audio" type="Node" parent="."]
+[node name="Explosion" type="CPUParticles" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.996393, -0.0848618, 0, 0.0848618, 0.996393, 0, 0, 0 )
+emitting = false
+amount = 15
+lifetime = 2.08
+one_shot = true
+explosiveness = 0.7
+randomness = 1.0
+mesh = SubResource( 4 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 90.19
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 1.0
+angular_velocity = 0.807843
+angular_velocity_random = 1.0
+angle_random = 0.5
+scale_amount = 10.0
+scale_amount_curve = SubResource( 5 )
+hue_variation = 0.11
 
-[node name="AssignTarget" type="AudioStreamPlayer2D" parent="Audio"]
-script = ExtResource( 13 )
-path = "res://Audio/UnitSounds/"
-sampleNames = PoolStringArray( "Affirmative.ogg", "AssigningAttackVector.ogg", "TangoInSights.ogg", "TargetLockedIn.ogg", "TaskReceived.ogg", "OnIt.ogg" )
-
-[node name="TargetDestroyed" type="AudioStreamPlayer2D" parent="Audio"]
-script = ExtResource( 13 )
-path = "res://Audio/UnitSounds/"
-samplesArrayIndexFFS = 1
-sampleNames = PoolStringArray( "HostileNeutralized.ogg", "ScratchOneBogey.ogg", "TangoDown.ogg", "TangoDown.ogg", "TaskCompleted.ogg", "ThreatRemoved.ogg" )
-
-[connection signal="OnTargetDestroyed" from="." to="Audio/TargetDestroyed" method="PlayRandom"]
-[connection signal="OnTargetAssigned" from="GUI" to="Audio/AssignTarget" method="PlayRandom"]
 [connection signal="OnDeath" from="Mothership/HP" to="Mothership" method="Destroy"]
