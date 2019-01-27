@@ -3,9 +3,6 @@ using System;
 
 public class CommandController : Node2D
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
 
     [Export]
     Color UiColor;
@@ -48,12 +45,10 @@ public class CommandController : Node2D
 			box = box.Abs();
 
 			if (box.Area > 1f) {
-					
 				MainController.I.selectedFighters.Clear();
 				shipList.Text = "";
 	
 				foreach (var fighter in MainController.I.fighters) {
-					
 					var worldPos = fighter.GetTranslation();
 					var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
 	
@@ -69,6 +64,10 @@ public class CommandController : Node2D
 				if (selectedShip != null && selectedShip.GetName().Contains("Ally")) {
 					MainController.I.selectedFighters.Add(selectedShip);
 					shipList.Text = selectedShip.GetName();
+				} else if (selectedShip != null && selectedShip.GetName().Contains("Mothership")) {
+					shipList.Text = selectedShip.GetName() + "\nHP: " + selectedShip.hp.GetHP();
+				} else if (selectedShip != null && selectedShip.GetName().Contains("Enemy")) {
+					shipList.Text = selectedShip.GetName() + "\nHP: " + selectedShip.hp.GetHP();
 				}
 			}
 			

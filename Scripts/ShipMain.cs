@@ -13,10 +13,12 @@ public class ShipMain : KinematicBody
     float speed = 0;
     
     public ShipAI ai;
+    public HP hp;
     
     public override void _Ready()
     {
     	ai = GetNode("AI") as ShipAI;
+    	hp = GetNode("HP") as HP;
     }
 
     public override void _PhysicsProcess(float delta)
