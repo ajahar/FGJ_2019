@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/ShipAI.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scenes/Laser.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/HP.cs" type="Script" id=5]
 [ext_resource path="res://Graphics/Fighter.dae" type="PackedScene" id=6]
+[ext_resource path="res://Graphics/Particle2.png" type="Texture" id=7]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -13,10 +14,14 @@ extents = Vector3( 1, 0.892542, 1.38905 )
 
 [sub_resource type="SpatialMaterial" id=2]
 
+flags_transparent = true
+flags_unshaded = true
+params_blend_mode = 1
 params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
+albedo_texture = ExtResource( 7 )
 
 [sub_resource type="QuadMesh" id=3]
 
@@ -50,13 +55,15 @@ script = ExtResource( 5 )
 transform = Transform( -0.1, 0, -8.74228e-009, 0, 0.1, 0, 8.74228e-009, 0, -0.1, -0.162704, 0, 0 )
 
 [node name="CPUParticles" type="CPUParticles" parent="."]
-transform = Transform( 0.3, 0, 0, 0, 0.1, 0, 0, 0, 0.2, 0, -0.106506, 0.573387 )
+transform = Transform( 0.21139, 0, 0, 0, 0.1, 0, 0, 0, 0.2, 0, -0.106506, 0.573387 )
+amount = 32
+lifetime = 3.5
 speed_scale = 3.0
 local_coords = false
 mesh = SubResource( 3 )
 emission_shape = 2
 emission_box_extents = Vector3( 1, 1, 1 )
-spread = 25.0
+spread = 10.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 2.0
 

@@ -127,7 +127,6 @@ angular_velocity_random = 1.0
 angle_random = 0.5
 scale_amount = 10.0
 scale_amount_curve = SubResource( 5 )
-color = Color( 0.14902, 0.0705882, 0.521569, 1 )
 hue_variation = 0.11
 
 [connection signal="OnDeath" from="Mothership/HP" to="Mothership" method="Destroy"]
