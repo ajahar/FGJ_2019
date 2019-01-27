@@ -16,7 +16,7 @@
 
 [sub_resource type="Curve" id=1]
 
-_data = [ Vector2( 0.530595, 0.7904 ), 0.0, -0.747843, 0, 0, Vector2( 0.907929, 0.2272 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0.0716748, 0.3944 ), 0.0, -0.747843, 0, 0, Vector2( 0.892631, 0.7728 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="BoxShape" id=2]
 
@@ -44,16 +44,16 @@ _data = [ Vector2( 0, 0 ), 0.0, 1.56659, 0, 0, Vector2( 0.520081, 1 ), 0.0, 0.0,
 
 [node name="Root" type="Spatial"]
 script = ExtResource( 1 )
-startDelay = 5.0
+startDelay = 20.0
 
 [node name="Gimbal" type="Spatial" parent="."]
 transform = Transform( 0.592277, 0, -0.805735, 0, 1, 0, 0.805735, 0, 0.592277, 0, 0, 0 )
 
 [node name="PitchGimbal" type="Spatial" parent="Gimbal"]
-transform = Transform( 1, 0, -2.98023e-08, 0, 0.911604, 0.41107, 0, -0.41107, 0.911604, 0, 0, 0 )
+transform = Transform( 1, 0, -2.98023e-008, 0, 0.911604, 0.41107, 0, -0.41107, 0.911604, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="Gimbal/PitchGimbal"]
-transform = Transform( 0.999999, 1.49012e-08, 2.98023e-08, -2.98023e-08, 1, 3.42727e-07, 0, 1.49012e-08, 1, 0, 7.15256e-07, 25 )
+transform = Transform( 0.999999, 1.49012e-008, 2.98023e-008, -2.98023e-008, 1, 3.42727e-007, 0, 1.49012e-008, 1, 0, 7.15256e-007, 25 )
 current = true
 script = ExtResource( 2 )
 
@@ -102,16 +102,23 @@ margin_right = 240.297
 margin_bottom = 440.297
 text = "		"
 
+[node name="Label" type="Label" parent="GUI"]
+margin_left = 442.123
+margin_top = 495.178
+margin_right = 595.123
+margin_bottom = 509.178
+text = "[ Epic Exposition Audio ]"
+
 [node name="Mothership" type="KinematicBody" parent="."]
-editor/display_folded = true
-transform = Transform( 1, 0, 2.98023e-08, 0, 1, -2.98023e-08, -2.98023e-08, -1.49012e-08, 1, 0, 0, 0 )
+transform = Transform( 1, 0, 2.98023e-008, 0, 1, -2.98023e-008, -2.98023e-008, -1.49012e-008, 1, 0, 0, 0 )
 script = ExtResource( 10 )
 
 [node name="Model" parent="Mothership" instance=ExtResource( 11 )]
-transform = Transform( 1, -4.44089e-16, -2.98023e-08, 8.88179e-16, 1, 2.98023e-08, 2.98023e-08, 1.49012e-08, 1, 0, 0, 0 )
+transform = Transform( 1, -4.44089e-016, -2.98023e-008, 8.88179e-016, 1, 2.98023e-008, 2.98023e-008, 1.49012e-008, 1, 0, 0, 0 )
 
 [node name="HP" type="Node" parent="Mothership"]
 script = ExtResource( 12 )
+startHP = 200.0
 
 [node name="CollisionShape" type="CollisionShape" parent="Mothership"]
 shape = SubResource( 2 )
@@ -141,5 +148,6 @@ hue_variation = 0.11
 [connection signal="OnTargetDestroyed" from="." to="Audio/TargetDestroy" method="PlayRandom"]
 [connection signal="start" from="." to="AllySpawner" method="OnGameStartTimer"]
 [connection signal="start" from="." to="EnemySpawner" method="OnGameStartTimer"]
+[connection signal="start" from="." to="GUI/Label" method="queue_free"]
 [connection signal="OnTargetAssigned" from="GUI" to="Audio/TargetSet" method="PlayRandom"]
 [connection signal="OnDeath" from="Mothership/HP" to="Mothership" method="Destroy"]
