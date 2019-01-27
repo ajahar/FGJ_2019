@@ -35,8 +35,9 @@ shootDistance = 20.0
 script = ExtResource( 5 )
 
 [node name="FighterMesh" parent="." instance=ExtResource( 6 )]
-transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, -0.162704, 0, 0 )
+transform = Transform( -0.1, 0, -8.74228e-009, 0, 0.1, 0, 8.74228e-009, 0, -0.1, -0.162704, 0, 0 )
 
+[connection signal="OnTargetSet" from="AI" to="Weapons" method="OnTargetSet"]
 [connection signal="OnShoot" from="Weapons" to="Weapons/Laser" method="CreateLaser"]
 [connection signal="OnShootEnd" from="Weapons" to="Weapons/Laser" method="DestroyLaser"]
 [connection signal="OnDeath" from="HP" to="." method="Destroy"]

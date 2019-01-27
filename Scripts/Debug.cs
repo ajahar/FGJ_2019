@@ -55,7 +55,7 @@ public class Debug : Node2D
     	var c = GetViewport().GetCamera();
         
         if (draw1)
-        	DrawLine(c.UnprojectPosition(start), c.UnprojectPosition(end), Color.ColorN("red"));
+        	DrawLine(c.UnprojectPosition(start), c.UnprojectPosition(end), Color.ColorN("purple"));
         
         if (draw2)
         	DrawLine(c.UnprojectPosition(start2), c.UnprojectPosition(end2), Color.ColorN("blue"));
