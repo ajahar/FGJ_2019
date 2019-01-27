@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/MainController.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/CameraControl.cs" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=10]
 [ext_resource path="res://Graphics/MotherShip.dae" type="PackedScene" id=11]
 [ext_resource path="res://Scripts/HP.cs" type="Script" id=12]
+[ext_resource path="res://Scripts/AudioPlayer.cs" type="Script" id=13]
 
 [sub_resource type="Curve" id=1]
 
@@ -28,7 +29,7 @@ script = ExtResource( 1 )
 transform = Transform( 0.592277, 0, -0.805735, 0, 1, 0, 0.805735, 0, 0.592277, 0, 0, 0 )
 
 [node name="PitchGimbal" type="Spatial" parent="Gimbal"]
-transform = Transform( 1, 0, -2.98023e-008, 0, 0.911604, 0.41107, 0, -0.41107, 0.911604, 0, 0, 0 )
+transform = Transform( 1, 0, -2.98023e-08, 0, 0.911604, 0.41107, 0, -0.41107, 0.911604, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="Gimbal/PitchGimbal"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25 )
@@ -73,11 +74,12 @@ margin_bottom = 440.297
 text = "		"
 
 [node name="Mothership" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 2.98023e-008, 0, 1, -2.98023e-008, -2.98023e-008, -1.49012e-008, 1, 0, 0, 0 )
+editor/display_folded = true
+transform = Transform( 1, 0, 2.98023e-08, 0, 1, -2.98023e-08, -2.98023e-08, -1.49012e-08, 1, 0, 0, 0 )
 script = ExtResource( 10 )
 
 [node name="Model" parent="Mothership" instance=ExtResource( 11 )]
-transform = Transform( 1, -4.44089e-016, -2.98023e-008, 8.88179e-016, 1, 2.98023e-008, 2.98023e-008, 1.49012e-008, 1, 0, 0, 0 )
+transform = Transform( 1, -4.44089e-16, -2.98023e-08, 8.88179e-16, 1, 2.98023e-08, 2.98023e-08, 1.49012e-08, 1, 0, 0, 0 )
 
 [node name="HP" type="Node" parent="Mothership"]
 script = ExtResource( 12 )
@@ -85,4 +87,19 @@ script = ExtResource( 12 )
 [node name="CollisionShape" type="CollisionShape" parent="Mothership"]
 shape = SubResource( 2 )
 
+[node name="Audio" type="Node" parent="."]
+
+[node name="AssignTarget" type="AudioStreamPlayer2D" parent="Audio"]
+script = ExtResource( 13 )
+path = "res://Audio/UnitSounds/"
+sampleNames = PoolStringArray( "Affirmative.ogg", "AssigningAttackVector.ogg", "TangoInSights.ogg", "TargetLockedIn.ogg", "TaskReceived.ogg", "OnIt.ogg" )
+
+[node name="TargetDestroyed" type="AudioStreamPlayer2D" parent="Audio"]
+script = ExtResource( 13 )
+path = "res://Audio/UnitSounds/"
+samplesArrayIndexFFS = 1
+sampleNames = PoolStringArray( "HostileNeutralized.ogg", "ScratchOneBogey.ogg", "TangoDown.ogg", "TangoDown.ogg", "TaskCompleted.ogg", "ThreatRemoved.ogg" )
+
+[connection signal="OnTargetDestroyed" from="." to="Audio/TargetDestroyed" method="PlayRandom"]
+[connection signal="OnTargetAssigned" from="GUI" to="Audio/AssignTarget" method="PlayRandom"]
 [connection signal="OnDeath" from="Mothership/HP" to="Mothership" method="Destroy"]

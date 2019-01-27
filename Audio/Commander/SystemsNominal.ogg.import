@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SystemsNominal.ogg-fdf7dd0d2e63af78558787cf77473d7c.oggstr"
+
+[deps]
+
+source_file="res://Audio/Commander/SystemsNominal.ogg"
+dest_files=[ "res://.import/SystemsNominal.ogg-fdf7dd0d2e63af78558787cf77473d7c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

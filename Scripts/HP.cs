@@ -27,6 +27,7 @@ public class HP : Node
 
             if (hp <= 0)
             {
+                GD.Print("OnDeath");
                 EmitSignal("OnDeath");
             }
         }

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Affirmative.ogg-3b539b407d3b1aa1c210096f73710db5.oggstr"
+
+[deps]
+
+source_file="res://Audio/UnitSounds/Affirmative.ogg"
+dest_files=[ "res://.import/Affirmative.ogg-3b539b407d3b1aa1c210096f73710db5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

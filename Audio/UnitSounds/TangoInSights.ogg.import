@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/TangoInSights.ogg-f80cc85073a949f0ff873272e62bc7f2.oggstr"
+
+[deps]
+
+source_file="res://Audio/UnitSounds/TangoInSights.ogg"
+dest_files=[ "res://.import/TangoInSights.ogg-f80cc85073a949f0ff873272e62bc7f2.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

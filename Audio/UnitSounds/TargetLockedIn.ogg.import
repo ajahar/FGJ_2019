@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/TargetLockedIn.ogg-731166afe07973cca67ee67444117bf6.oggstr"
+
+[deps]
+
+source_file="res://Audio/UnitSounds/TargetLockedIn.ogg"
+dest_files=[ "res://.import/TargetLockedIn.ogg-731166afe07973cca67ee67444117bf6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

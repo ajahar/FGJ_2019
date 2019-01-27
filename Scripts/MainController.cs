@@ -12,10 +12,14 @@ public class MainController : Spatial
 
     public KinematicBody mothership;
     public static Random r = new Random();
-    
+
     public List<ShipMain> enemies = new List<ShipMain>();
     public List<ShipMain> fighters = new List<ShipMain>();
     public List<ShipMain> selectedFighters = new List<ShipMain>();
+
+        
+    [Signal]
+    public delegate void OnTargetDestroyed();
 
     public override void _EnterTree()
     {
@@ -41,6 +45,11 @@ public class MainController : Spatial
     }
 
 
+    public static int RandomInt(int min, int max)
+    {
+        return r.Next(min, max);
+    }
+
     public static float RandomFloat(float min, float max)
     {
         return min + (float)r.NextDouble() * (max - min);
@@ -51,5 +60,19 @@ public class MainController : Spatial
     
         var randomAngle = RandomFloat(0, Mathf.Pi * 2);
         return new Vector3(Mathf.Cos(randomAngle), RandomFloat(-1, 1), Mathf.Sin(randomAngle));
+    }
+
+    public void AddEnemy(ShipMain enemy)
+    {
+        enemies.Add(enemy);
+        var hp = enemy.GetNode("HP") as HP;
+        GD.Print("EnemyHP: " + hp);
+        hp.Connect("OnDeath", this, "OnEnemyDeath");
+    }
+
+    void OnEnemyDeath() 
+    {
+        GD.Print("EnemyDestroyed");
+        EmitSignal("OnTargetDestroyed");
     }
 }

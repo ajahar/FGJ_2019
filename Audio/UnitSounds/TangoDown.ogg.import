@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/TangoDown.ogg-65f2e367aa0f6e23e8bbce7f85eac325.oggstr"
+
+[deps]
+
+source_file="res://Audio/UnitSounds/TangoDown.ogg"
+dest_files=[ "res://.import/TangoDown.ogg-65f2e367aa0f6e23e8bbce7f85eac325.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SystemsCritical.ogg-2a5d6152fdea88421120ad046a1a3689.oggstr"
+
+[deps]
+
+source_file="res://Audio/Commander/SystemsCritical.ogg"
+dest_files=[ "res://.import/SystemsCritical.ogg-2a5d6152fdea88421120ad046a1a3689.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

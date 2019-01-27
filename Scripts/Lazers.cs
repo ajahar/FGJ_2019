@@ -28,7 +28,6 @@ public class Lazers : ImmediateGeometry
         Begin(Mesh.PrimitiveType.Triangles, null);
 
         distance = GlobalTransform.origin.DistanceTo(target.GlobalTransform.origin);
-        GD.Print(distance);
         
         AddVertexQ(new Vector3(-0.5f, 0, -0.5f));//2
         AddVertexQ(new Vector3(0.5f, 0, -0.5f));//1

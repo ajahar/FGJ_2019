@@ -3,6 +3,8 @@ using System;
 
 public class CommandController : Node2D
 {
+    [Signal]
+    public delegate void OnTargetAssigned();
 
     [Export]
     Color UiColor;
@@ -77,13 +79,15 @@ public class CommandController : Node2D
 		
 		if(Input.IsActionJustReleased("mouse_action") && !camera.drag) {
 			var targetShip = pointSelect();
-			if (targetShip != null && MainController.I.enemies.Contains(targetShip)) {
+			if (targetShip != null && MainController.I.enemies.Contains(targetShip) && MainController.I.selectedFighters.Count > 0) {
 				shipList.Text = "";
 				foreach (var fighter in MainController.I.selectedFighters) {
 					fighter.ai.SetTarget(targetShip);
 					shipList.Text = shipList.Text + fighter.Name + "\n";
 				}
 				shipList.Text = shipList.Text + "Attack: " + targetShip.GetName();
+
+                EmitSignal("OnTargetAssigned");
 			}
 		}
 		
@@ -112,7 +116,6 @@ public class CommandController : Node2D
 	
 	public override void _Draw()
 	{
-		
 		foreach(var fighter in MainController.I.selectedFighters) {
 			var worldPos = fighter.GetTranslation();
 			var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);

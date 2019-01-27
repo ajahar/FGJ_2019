@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SystemsHalf.ogg-fa7cccd88e8f009763796c89688709d5.oggstr"
+
+[deps]
+
+source_file="res://Audio/Commander/SystemsHalf.ogg"
+dest_files=[ "res://.import/SystemsHalf.ogg-fa7cccd88e8f009763796c89688709d5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

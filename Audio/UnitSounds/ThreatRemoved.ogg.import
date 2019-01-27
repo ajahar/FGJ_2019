@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ThreatRemoved.ogg-13da35f2da4d15d9eb8e2f353d526d81.oggstr"
+
+[deps]
+
+source_file="res://Audio/UnitSounds/ThreatRemoved.ogg"
+dest_files=[ "res://.import/ThreatRemoved.ogg-13da35f2da4d15d9eb8e2f353d526d81.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

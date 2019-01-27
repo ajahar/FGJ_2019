@@ -56,5 +56,5 @@ public class ShipMain : KinematicBody
     public void Destroy() 
     {
         QueueFree();
-     }
+    }
 }

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/AssigningAttackVector.ogg-d50016b71c8a819dff83dc4a99126421.oggstr"
+
+[deps]
+
+source_file="res://Audio/UnitSounds/AssigningAttackVector.ogg"
+dest_files=[ "res://.import/AssigningAttackVector.ogg-d50016b71c8a819dff83dc4a99126421.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
