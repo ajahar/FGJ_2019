@@ -28,7 +28,7 @@ script = ExtResource( 1 )
 transform = Transform( 0.592277, 0, -0.805735, 0, 1, 0, 0.805735, 0, 0.592277, 0, 0, 0 )
 
 [node name="PitchGimbal" type="Spatial" parent="Gimbal"]
-transform = Transform( 1, 0, -2.98023e-08, 0, 0.911604, 0.41107, 0, -0.41107, 0.911604, 0, 0, 0 )
+transform = Transform( 1, 0, -2.98023e-008, 0, 0.911604, 0.41107, 0, -0.41107, 0.911604, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="Gimbal/PitchGimbal"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25 )
@@ -63,6 +63,7 @@ light_indirect_energy = 2.22
 [node name="GUI" type="Node2D" parent="."]
 script = ExtResource( 9 )
 UiColor = Color( 0.00784314, 1, 0, 1 )
+CommandColor = Color( 1, 0.0196078, 0, 1 )
 
 [node name="ShipList" type="RichTextLabel" parent="GUI"]
 margin_left = 40.2966
@@ -72,11 +73,11 @@ margin_bottom = 440.297
 text = "		"
 
 [node name="Mothership" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 2.98023e-08, 0, 1, -2.98023e-08, -2.98023e-08, -1.49012e-08, 1, 0, 0, 0 )
+transform = Transform( 1, 0, 2.98023e-008, 0, 1, -2.98023e-008, -2.98023e-008, -1.49012e-008, 1, 0, 0, 0 )
 script = ExtResource( 10 )
 
 [node name="Model" parent="Mothership" instance=ExtResource( 11 )]
-transform = Transform( 1, -4.44089e-16, -2.98023e-08, 8.88179e-16, 1, 2.98023e-08, 2.98023e-08, 1.49012e-08, 1, 0, 0, 0 )
+transform = Transform( 1, -4.44089e-016, -2.98023e-008, 8.88179e-016, 1, 2.98023e-008, 2.98023e-008, 1.49012e-008, 1, 0, 0, 0 )
 
 [node name="HP" type="Node" parent="Mothership"]
 script = ExtResource( 12 )
