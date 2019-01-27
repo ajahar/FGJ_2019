@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/ShipAI.cs" type="Script" id=2]
@@ -6,12 +6,29 @@
 [ext_resource path="res://Scripts/ShipWeapons.cs" type="Script" id=4]
 [ext_resource path="res://Scenes/Laser.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/EnemyMesh.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Graphics/Particle2.png" type="Texture" id=7]
 
 [sub_resource type="BoxShape" id=1]
 
 
+[sub_resource type="SpatialMaterial" id=2]
+
+flags_transparent = true
+flags_unshaded = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="QuadMesh" id=3]
+
+material = SubResource( 2 )
+size = Vector2( 0.1, 0.1 )
+
 [node name="EnemyFighter" type="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2795e-05, 0.000233625, -9.38596e-05 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2795e-005, 0.000233625, -9.38596e-005 )
 script = ExtResource( 1 )
 maxSpeed = 8.0
 acceleration = 3.0
@@ -37,7 +54,20 @@ cast_shadow = 0
 shape = SubResource( 1 )
 
 [node name="EnemyMesh" parent="." instance=ExtResource( 6 )]
-transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, -0.146726, 0, 0 )
+transform = Transform( -0.1, 0, -8.74228e-009, 0, 0.1, 0, 8.74228e-009, 0, -0.1, -0.146726, 0, 0 )
+
+[node name="CPUParticles" type="CPUParticles" parent="."]
+transform = Transform( 0.21139, 0, 0, 0, 0.1, 0, 0, 0, 0.2, 0, -0.106506, 0.573387 )
+amount = 32
+lifetime = 3.5
+speed_scale = 3.0
+local_coords = false
+mesh = SubResource( 3 )
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+spread = 10.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 2.0
 
 [connection signal="OnTargetSet" from="AI" to="Weapons" method="OnTargetSet"]
 [connection signal="OnDeath" from="HP" to="." method="Destroy"]
