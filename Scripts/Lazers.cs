@@ -5,17 +5,13 @@ public class Lazers : ImmediateGeometry
 {
 
     Vector3 test = Vector3.Up;
-    Quat q;
+    Quat q = new Quat(new Vector3(-Mathf.Pi / 2,0,0));
     float distance = 5;
     float size = 0.1f;
 
     public override void _Ready()
     {
-        var other = GetNode("../MeshInstance") as Spatial;
-        
-        q = new Quat(other.Transform.basis);
 
-        
     }
 
     private void AddVertexQ(Vector3 vector3)
@@ -24,14 +20,16 @@ public class Lazers : ImmediateGeometry
         vector3.z *= size;
         vector3.y *= distance;
         AddVertex(q.Xform(vector3));
-        
     }
 
-    public override void _Process(float delta)
+    public void CreateLaser(Spatial target)
     {
         Clear();
         Begin(Mesh.PrimitiveType.Triangles, null);
-        //SetColor(new Color(256f, 0f,0f, 1f));
+
+        distance = GlobalTransform.origin.DistanceTo(target.GlobalTransform.origin);
+        GD.Print(distance);
+        
         AddVertexQ(new Vector3(-0.5f, 0, -0.5f));//2
         AddVertexQ(new Vector3(0.5f, 0, -0.5f));//1
         AddVertexQ(new Vector3(-0.5f, 1, -0.5f));//3
@@ -57,5 +55,12 @@ public class Lazers : ImmediateGeometry
         AddVertexQ(new Vector3(0, 1, 0.5f));//6
         
         End();
+
+        GlobalTransform.SetLookAt(GlobalTransform.origin, target.GlobalTransform.origin, target.GlobalTransform.basis.z);
+    }
+
+    public void DestroyLaser()
+    {
+        Clear();
     }
 }

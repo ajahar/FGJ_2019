@@ -47,7 +47,8 @@ public class AllySpawner : Node
         GD.Print("Spawn ally");
         var ally = allyScene.Instance() as KinematicBody;
         GetParent().AddChild(ally);
-        ally.Translation = MainController.I.mothership.Translation + (Vector3.Back * 3);
+        ally.Translation = MainController.I.mothership.Translation + new Vector3(-1.7f,1.1f,0);
+        ally.Rotate(Vector3.Up, Mathf.Pi);
         MainController.I.fighters.Add((ShipMain)ally);
 
         var rallyPoint = (MainController.I.mothership.Translation + (Vector3.Back * 15)) + MainController.RandomPointOnSphere() * 5;

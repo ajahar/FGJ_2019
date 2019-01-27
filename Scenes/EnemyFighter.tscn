@@ -1,16 +1,34 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/ShipAI.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/HP.cs" type="Script" id=3]
 [ext_resource path="res://Scripts/ShipWeapons.cs" type="Script" id=4]
-[ext_resource path="res://Scenes/EnemyMesh.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Laser.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/EnemyMesh.tscn" type="PackedScene" id=6]
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="Shader" id=2]
+
+code = "shader_type spatial;
+render_mode unshaded;
+
+uniform vec3 color;
+
+void fragment()
+{
+	ALBEDO = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+
+shader = SubResource( 2 )
+shader_param/color = Vector3( 256, 0, 0 )
+
+[sub_resource type="BoxShape" id=1]
 
 
 [node name="EnemyFighter" type="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2795e-005, 0.000233625, -9.38596e-005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2795e-05, 0.000233625, -9.38596e-05 )
 script = ExtResource( 1 )
 maxSpeed = 8.0
 acceleration = 3.0
@@ -24,16 +42,22 @@ retargetDistance = 10.0
 script = ExtResource( 3 )
 startHP = 10.0
 
-[node name="Weapons" type="Node" parent="."]
+[node name="Weapons" type="Spatial" parent="."]
 script = ExtResource( 4 )
 damagePerSecond = 5.0
 shootDistance = 15.0
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 3 )
+[node name="Laser" parent="Weapons" instance=ExtResource( 5 )]
+material_override = SubResource( 3 )
+cast_shadow = 0
 
-[node name="EnemyMesh" parent="." instance=ExtResource( 5 )]
-transform = Transform( -0.1, 0, -8.74228e-009, 0, 0.1, 0, 8.74228e-009, 0, -0.1, 0, 0, 0 )
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="EnemyMesh" parent="." instance=ExtResource( 6 )]
+transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, -0.146726, 0, 0 )
 
 [connection signal="OnTargetSet" from="AI" to="Weapons" method="OnTargetSet"]
 [connection signal="OnDeath" from="HP" to="." method="Destroy"]
+[connection signal="OnShoot" from="Weapons" to="Weapons/Laser" method="CreateLaser"]
+[connection signal="OnShootEnd" from="Weapons" to="Weapons/Laser" method="DestroyLaser"]

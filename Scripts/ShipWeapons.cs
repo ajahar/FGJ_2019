@@ -3,12 +3,14 @@ using System;
 
 public class ShipWeapons : Node
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
+    [Signal]
+    public delegate void OnShoot(Spatial target);
+    
+    [Signal]
+    public delegate void OnShootEnd();
+
     KinematicBody parent, target;
     HP targetHP;
-
 
     [Export]
     float damagePerSecond = 1;
@@ -16,7 +18,8 @@ public class ShipWeapons : Node
     [Export]
     float shootDistance = 0;
 
-    // Called when the node enters the scene tree for the first time.
+    bool shooting = false;
+
     public override void _Ready()
     {
         parent = GetParent() as KinematicBody;
@@ -45,9 +48,18 @@ public class ShipWeapons : Node
 
                 if (dot > 0.9f)
                 {
-                   targetHP.LoseHP(damagePerSecond * delta);
-		            //Debug.DrawLine(parent.Translation, target.Translation);
-                
+					EmitSignal("OnShoot", target);
+					
+                    targetHP.LoseHP(damagePerSecond * delta);
+                    //Debug.DrawLine(parent.Translation, target.Translation);
+
+                    shooting = true;
+                    
+                }
+                else if (shooting)
+                {
+                    shooting = false;
+                    EmitSignal("OnShootEnd");
                 }
             }
         }
