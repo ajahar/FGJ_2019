@@ -11,9 +11,12 @@ public class ShipMain : KinematicBody
     bool moving = false;
     Vector3 moveTarget;
     float speed = 0;
-
+    
+    public ShipAI ai;
+    
     public override void _Ready()
     {
+    	ai = GetNode("AI") as ShipAI;
     }
 
     public override void _PhysicsProcess(float delta)

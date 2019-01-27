@@ -1,11 +1,11 @@
 using Godot;
 using System;
 
-public class EnemySpawner : Node
+public class AllySpawner : Node
 {
     Timer timer;
     Random r;
-    PackedScene enemyScene;
+    PackedScene allyScene;
     
     [Export]
     Curve spawnDelay;
@@ -19,7 +19,7 @@ public class EnemySpawner : Node
 
     public override void _Ready()
     {
-        enemyScene = ResourceLoader.Load("Scenes/EnemyFighter.tscn") as PackedScene;
+        allyScene = ResourceLoader.Load("Scenes/AllyFighter.tscn") as PackedScene;
 
         r = new Random();
         timer = new Timer();
@@ -44,13 +44,13 @@ public class EnemySpawner : Node
         
         timer.Start();
 
-        GD.Print("Spawn enemy");
-        var enemy = enemyScene.Instance() as KinematicBody;
-        GetParent().AddChild(enemy);
-        enemy.Translation = MainController.I.mothership.Translation + MainController.RandomPointOnSphere() * 20;
-        MainController.I.enemies.Add((ShipMain)enemy);
-        
-        var AI = enemy.GetNode("AI") as ShipAI;
-        AI.SetTarget(MainController.I.mothership);
+        GD.Print("Spawn ally");
+        var ally = allyScene.Instance() as KinematicBody;
+        GetParent().AddChild(ally);
+        ally.Translation = MainController.I.mothership.Translation + (Vector3.Back * 3);
+        MainController.I.fighters.Add((ShipMain)ally);
+
+        var rallyPoint = (MainController.I.mothership.Translation + (Vector3.Back * 15)) + MainController.RandomPointOnSphere() * 5;
+        ((ShipMain)ally).MoveTo(rallyPoint);
     }
 }

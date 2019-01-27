@@ -9,6 +9,8 @@ public class CommandController : Node2D
 
     [Export]
     Color UiColor;
+    [Export]
+    Color CommandColor;
     
     const float RAY_LENGTH = 1000f;
     
@@ -47,19 +49,25 @@ public class CommandController : Node2D
 
 			if (box.Area > 1f) {
 					
-				//TODO: Bandbox selection with proper ship list
+				MainController.I.selectedFighters.Clear();
+				shipList.Text = "";
 	
-				var ship = GetNode<ShipMain>("../AllyFighter");
-				var worldPos = ship.GetTranslation();
-				var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
-
-				if(box.HasPoint(screenPos)) {
-					shipList.Text = ship.GetName();
-					//ship.selected = true;
-				}
+				foreach (var fighter in MainController.I.fighters) {
+					
+					var worldPos = fighter.GetTranslation();
+					var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
+	
+					if(box.HasPoint(screenPos)) {		
+						MainController.I.selectedFighters.Add(fighter);
+						shipList.Text = shipList.Text + fighter.Name + "\n";
+					}
+				}		
 			} else {
+				MainController.I.selectedFighters.Clear();
+				shipList.Text = "";
 				var selectedShip = pointSelect();
-				if (selectedShip != null) {
+				if (selectedShip != null && selectedShip.GetName().Contains("Ally")) {
+					MainController.I.selectedFighters.Add(selectedShip);
 					shipList.Text = selectedShip.GetName();
 				}
 			}
@@ -68,13 +76,21 @@ public class CommandController : Node2D
 			Update();
 		}
 		
-		if(Input.IsActionPressed("mouse_action") && !camera.drag) {
-			// TODO: Set target
+		if(Input.IsActionJustReleased("mouse_action") && !camera.drag) {
 			var targetShip = pointSelect();
-			if (targetShip != null) {
-				shipList.Text = "Attack: " + targetShip.GetName();
+			if (targetShip != null && MainController.I.enemies.Contains(targetShip)) {
+				shipList.Text = "";
+				foreach (var fighter in MainController.I.selectedFighters) {
+					fighter.ai.SetTarget(targetShip);
+					shipList.Text = shipList.Text + fighter.Name + "\n";
+				}
+				shipList.Text = shipList.Text + "Attack: " + targetShip.GetName();
 			}
 		}
+		
+		//if (MainController.I.selectedFighters.Count > 0) {
+			Update();
+		//}
 	}
 	
 	public ShipMain pointSelect() {		
@@ -97,6 +113,38 @@ public class CommandController : Node2D
 	
 	public override void _Draw()
 	{
+		
+		foreach(var fighter in MainController.I.selectedFighters) {
+			var worldPos = fighter.GetTranslation();
+			var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
+			
+			DrawLine(screenPos + Vector2.Up * 20,screenPos + (Vector2.Left * 20) + (Vector2.Down * 20), UiColor);
+			DrawLine(screenPos + (Vector2.Left * 20) + (Vector2.Down * 20),screenPos + (Vector2.Right * 20) + (Vector2.Down * 20), UiColor);
+			DrawLine(screenPos + (Vector2.Right * 20) +(Vector2.Down * 20),screenPos + Vector2.Up * 20, UiColor);
+			
+//			if (fighter.ai.GetTarget() != Vector3.Zero) {
+//				var targetScreenPos = GetViewport().GetCamera().UnprojectPosition(fighter.ai.GetTarget());
+//				DrawLine(screenPos, targetScreenPos, CommandColor);
+//			
+//				DrawLine(targetScreenPos + Vector2.Down * 20,targetScreenPos + (Vector2.Left * 10) + (Vector2.Up * 10), CommandColor);
+//				DrawLine(targetScreenPos + (Vector2.Left * 10)+ (Vector2.Up * 10) ,targetScreenPos + (Vector2.Right * 10) + (Vector2.Up * 10), CommandColor);
+//				DrawLine(targetScreenPos + (Vector2.Right * 10) + (Vector2.Up * 10),targetScreenPos + Vector2.Down * 20, CommandColor);			
+//			}
+		}
+		
+		foreach(var fighter in MainController.I.fighters) {
+			var worldPos = fighter.GetTranslation();
+			var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
+			if (fighter.ai.GetTarget() != Vector3.Zero) {
+				var targetScreenPos = GetViewport().GetCamera().UnprojectPosition(fighter.ai.GetTarget());
+				DrawLine(screenPos, targetScreenPos, CommandColor);
+			
+				DrawLine(targetScreenPos + Vector2.Down * 20,targetScreenPos + (Vector2.Left * 10) + (Vector2.Up * 10), CommandColor);
+				DrawLine(targetScreenPos + (Vector2.Left * 10)+ (Vector2.Up * 10) ,targetScreenPos + (Vector2.Right * 10) + (Vector2.Up * 10), CommandColor);
+				DrawLine(targetScreenPos + (Vector2.Right * 10) + (Vector2.Up * 10),targetScreenPos + Vector2.Down * 20, CommandColor);			
+			}
+		}
+		
 		DrawRect(box, UiColor, false);
 	}
 }

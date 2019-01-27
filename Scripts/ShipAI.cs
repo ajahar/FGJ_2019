@@ -31,12 +31,20 @@ public class ShipAI : Node
 
         targetHP.Connect("OnDeath", this, "OnTargetDeath");
     }
+    
+    public Vector3 GetTarget() {
+    	if (target != null) {
+    		return target.GlobalTransform.origin;
+    	}
+    	return Vector3.Zero;
+    }
 
     public void OnTargetDeath() 
     {
         target = null;
 
-        main.MoveTo(MainController.RandomPointOnSphere() * 200000);
+        // TODO: Retarget?
+        //main.MoveTo(MainController.RandomPointOnSphere() * 200000);
     }
 
     public override void _Process(float delta)
