@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/ShipMain.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/ShipAI.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/ShipWeapons.cs" type="Script" id=3]
 [ext_resource path="res://Scenes/Laser.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scripts/HP.cs" type="Script" id=5]
-[ext_resource path="res://Graphics/Fighter.dae" type="PackedScene" id=6]
+[ext_resource path="res://Graphics/LaserMaterial.tres" type="Material" id=5]
+[ext_resource path="res://Scripts/HP.cs" type="Script" id=6]
+[ext_resource path="res://Graphics/Fighter.dae" type="PackedScene" id=7]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -30,11 +31,12 @@ damagePerSecond = 2.0
 shootDistance = 20.0
 
 [node name="Laser" parent="Weapons" instance=ExtResource( 4 )]
+material_override = ExtResource( 5 )
 
 [node name="HP" type="Node" parent="."]
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
-[node name="FighterMesh" parent="." instance=ExtResource( 6 )]
+[node name="FighterMesh" parent="." instance=ExtResource( 7 )]
 transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, -0.162704, 0, 0 )
 
 [connection signal="OnShoot" from="Weapons" to="Weapons/Laser" method="CreateLaser"]
