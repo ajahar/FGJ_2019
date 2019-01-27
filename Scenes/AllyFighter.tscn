@@ -21,7 +21,7 @@ shape = SubResource( 1 )
 [node name="AI" type="Node" parent="."]
 script = ExtResource( 2 )
 retargetFlyDuration = 4000.0
-retargetDistance = -10.0
+retargetDistance = 5.0
 
 [node name="Weapons" type="Node" parent="."]
 script = ExtResource( 3 )

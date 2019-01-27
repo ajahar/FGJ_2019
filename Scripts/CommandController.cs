@@ -9,6 +9,8 @@ public class CommandController : Node2D
 
     [Export]
     Color UiColor;
+    [Export]
+    Color CommandColor;
     
     const float RAY_LENGTH = 1000f;
     
@@ -86,9 +88,9 @@ public class CommandController : Node2D
 			}
 		}
 		
-		if (MainController.I.selectedFighters.Count > 0) {
+		//if (MainController.I.selectedFighters.Count > 0) {
 			Update();
-		}
+		//}
 	}
 	
 	public ShipMain pointSelect() {		
@@ -116,9 +118,31 @@ public class CommandController : Node2D
 			var worldPos = fighter.GetTranslation();
 			var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
 			
-			DrawLine(screenPos + Vector2.Up * 20,screenPos + Vector2.Left * 20, UiColor);
-			DrawLine(screenPos + Vector2.Left * 20,screenPos + Vector2.Right * 20, UiColor);
-			DrawLine(screenPos + Vector2.Right * 20,screenPos + Vector2.Up * 20, UiColor);
+			DrawLine(screenPos + Vector2.Up * 20,screenPos + (Vector2.Left * 20) + (Vector2.Down * 20), UiColor);
+			DrawLine(screenPos + (Vector2.Left * 20) + (Vector2.Down * 20),screenPos + (Vector2.Right * 20) + (Vector2.Down * 20), UiColor);
+			DrawLine(screenPos + (Vector2.Right * 20) +(Vector2.Down * 20),screenPos + Vector2.Up * 20, UiColor);
+			
+//			if (fighter.ai.GetTarget() != Vector3.Zero) {
+//				var targetScreenPos = GetViewport().GetCamera().UnprojectPosition(fighter.ai.GetTarget());
+//				DrawLine(screenPos, targetScreenPos, CommandColor);
+//			
+//				DrawLine(targetScreenPos + Vector2.Down * 20,targetScreenPos + (Vector2.Left * 10) + (Vector2.Up * 10), CommandColor);
+//				DrawLine(targetScreenPos + (Vector2.Left * 10)+ (Vector2.Up * 10) ,targetScreenPos + (Vector2.Right * 10) + (Vector2.Up * 10), CommandColor);
+//				DrawLine(targetScreenPos + (Vector2.Right * 10) + (Vector2.Up * 10),targetScreenPos + Vector2.Down * 20, CommandColor);			
+//			}
+		}
+		
+		foreach(var fighter in MainController.I.fighters) {
+			var worldPos = fighter.GetTranslation();
+			var screenPos = GetViewport().GetCamera().UnprojectPosition(worldPos);
+			if (fighter.ai.GetTarget() != Vector3.Zero) {
+				var targetScreenPos = GetViewport().GetCamera().UnprojectPosition(fighter.ai.GetTarget());
+				DrawLine(screenPos, targetScreenPos, CommandColor);
+			
+				DrawLine(targetScreenPos + Vector2.Down * 20,targetScreenPos + (Vector2.Left * 10) + (Vector2.Up * 10), CommandColor);
+				DrawLine(targetScreenPos + (Vector2.Left * 10)+ (Vector2.Up * 10) ,targetScreenPos + (Vector2.Right * 10) + (Vector2.Up * 10), CommandColor);
+				DrawLine(targetScreenPos + (Vector2.Right * 10) + (Vector2.Up * 10),targetScreenPos + Vector2.Down * 20, CommandColor);			
+			}
 		}
 		
 		DrawRect(box, UiColor, false);
