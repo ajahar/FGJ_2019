@@ -36,6 +36,8 @@ public class ShipWeapons : Node
     public void OnTargetDeath() 
     {
         target = null;
+        shooting = false;
+        EmitSignal("OnShootEnd");
     }
 
     public override void _Process(float delta)
