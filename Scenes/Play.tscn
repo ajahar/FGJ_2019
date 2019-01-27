@@ -63,6 +63,7 @@ light_indirect_energy = 2.22
 [node name="GUI" type="Node2D" parent="."]
 script = ExtResource( 9 )
 UiColor = Color( 0.00784314, 1, 0, 1 )
+CommandColor = Color( 1, 0.0196078, 0, 1 )
 
 [node name="ShipList" type="RichTextLabel" parent="GUI"]
 margin_left = 40.2966
