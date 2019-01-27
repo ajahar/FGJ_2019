@@ -52,7 +52,7 @@ transform = Transform( 0.592277, 0, -0.805735, 0, 1, 0, 0.805735, 0, 0.592277, 0
 transform = Transform( 1, 0, -2.98023e-008, 0, 0.911604, 0.41107, 0, -0.41107, 0.911604, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="Gimbal/PitchGimbal"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 25 )
+transform = Transform( 0.999999, 1.49012e-008, 2.98023e-008, -2.98023e-008, 1, 3.42727e-007, 0, 1.49012e-008, 1, 0, 7.15256e-007, 25 )
 current = true
 script = ExtResource( 2 )
 
@@ -129,4 +129,6 @@ scale_amount = 10.0
 scale_amount_curve = SubResource( 5 )
 hue_variation = 0.11
 
+[connection signal="start" from="." to="EnemySpawner" method="OnGameStartTimer"]
+[connection signal="start" from="." to="AllySpawner" method="OnGameStartTimer"]
 [connection signal="OnDeath" from="Mothership/HP" to="Mothership" method="Destroy"]

@@ -26,9 +26,12 @@ public class EnemySpawner : Node
         timer.Connect("timeout", this, "OnSpawnTimer");
         timer.WaitTime = 2;
         AddChild(timer);
-        timer.Start();
 
         startTime = OS.GetSystemTimeSecs();
+    }
+    
+    public void OnGameStartTimer() {
+    	timer.Start();
     }
 
     public void OnSpawnTimer()

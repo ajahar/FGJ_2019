@@ -18,6 +18,13 @@ public class MainController : Spatial
     public List<ShipMain> selectedFighters = new List<ShipMain>();
     
     CPUParticles explosion;
+    Timer timer;
+    
+    [Export]
+    float startDelay = 30f;
+    
+    [Signal]
+    public delegate void start();
 
     public override void _EnterTree()
     {
@@ -31,6 +38,12 @@ public class MainController : Spatial
         fighters.Add(GetNode<ShipMain>("AllyFighter"));
         
         explosion = GetNode("Explosion") as CPUParticles;
+        
+
+    }
+    
+    public void OnGameStartTimer() {
+    	EmitSignal("start");
     }
 
     public void OnMothershipDeath() 
@@ -42,7 +55,12 @@ public class MainController : Spatial
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-
+		timer = new Timer();
+        timer.OneShot = true;
+        timer.Connect("timeout", this, "OnGameStartTimer");
+        timer.WaitTime = startDelay;
+        AddChild(timer);
+        timer.Start();
     }
 
 
