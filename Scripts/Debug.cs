@@ -28,23 +28,25 @@ public class Debug : Node2D
     {
         start = startPoint;
         end = startPoint + ray;
+        draw1 = true;
     }
     
     public static void DrawLine2(Vector3 startPoint, Vector3 endPoint)
     {
         start2 = startPoint;
         end2 = endPoint;
+        draw2 = true;
     }
     
     public static void DrawRay2(Vector3 startPoint, Vector3 ray)
     {
         start2 = startPoint;
         end2 = startPoint + ray;
+        draw2 = true;
     }
 
     public override void _Process(float delta)
     {
-        base._Process(delta);
         Update();
     }
 
