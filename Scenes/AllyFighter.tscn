@@ -52,6 +52,7 @@ transform = Transform( -0.1, 0, -8.74228e-009, 0, 0.1, 0, 8.74228e-009, 0, -0.1,
 [node name="CPUParticles" type="CPUParticles" parent="."]
 transform = Transform( 0.3, 0, 0, 0, 0.1, 0, 0, 0, 0.2, 0, -0.106506, 0.573387 )
 speed_scale = 3.0
+local_coords = false
 mesh = SubResource( 3 )
 emission_shape = 2
 emission_box_extents = Vector3( 1, 1, 1 )
