@@ -39,7 +39,7 @@ public class MainController : Spatial
 
         hp.Connect("OnDeath", this, "OnMothershipDeath");
         
-        fighters.Add(GetNode<ShipMain>("AllyFighter"));
+        //fighters.Add(GetNode<ShipMain>("AllyFighter"));
         
         explosion = GetNode("Explosion") as CPUParticles;
         
