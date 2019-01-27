@@ -16,6 +16,8 @@ public class MainController : Spatial
     public List<ShipMain> enemies = new List<ShipMain>();
     public List<ShipMain> fighters = new List<ShipMain>();
     public List<ShipMain> selectedFighters = new List<ShipMain>();
+    
+    CPUParticles explosion;
 
     public override void _EnterTree()
     {
@@ -27,10 +29,13 @@ public class MainController : Spatial
         hp.Connect("OnDeath", this, "OnMothershipDeath");
         
         fighters.Add(GetNode<ShipMain>("AllyFighter"));
+        
+        explosion = GetNode("Explosion") as CPUParticles;
     }
 
     public void OnMothershipDeath() 
     {
+    	explosion.Emitting = true;
         mothership = null;
     }
 
