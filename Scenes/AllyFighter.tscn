@@ -23,15 +23,18 @@ script = ExtResource( 2 )
 retargetFlyDuration = 4000.0
 retargetDistance = 5.0
 
-[node name="Weapons" type="Node" parent="."]
+[node name="Weapons" type="Spatial" parent="."]
 script = ExtResource( 3 )
 damagePerSecond = 2.0
 shootDistance = 20.0
+
+[node name="Laser" type="Spatial" parent="Weapons"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.158205, -0.0582674, -0.798655 )
 
 [node name="HP" type="Node" parent="."]
 script = ExtResource( 4 )
 
 [node name="FighterMesh" parent="." instance=ExtResource( 5 )]
-transform = Transform( -0.1, 0, -8.74228e-009, 0, 0.1, 0, 8.74228e-009, 0, -0.1, 0, 0, 0 )
+transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, -0.162704, 0, 0 )
 
 [connection signal="OnDeath" from="HP" to="." method="Destroy"]
